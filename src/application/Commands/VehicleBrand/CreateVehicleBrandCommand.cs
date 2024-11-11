@@ -4,15 +4,17 @@ using MediatR;
 using OneOf;
 using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
+using workshopManager.Application.Exceptions;
+using VehicleBrandEntity = workshopManager.Domain.Entities.VehicleBrand;
 
 namespace workshopManager.Application.Commands.VehicleBrand;
 
-public sealed class CreateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, Exception>>
+public sealed record CreateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, AlreadyExistException>>
 {
 }
 
 public sealed class CreateVehicleBrandCommandHandler 
-    : IRequestHandler<CreateVehicleBrandCommand, OneOf<VehicleBrandDto, ValidationException, Exception>>
+    : IRequestHandler<CreateVehicleBrandCommand, OneOf<VehicleBrandDto, ValidationException, AlreadyExistException>>
 {
     private readonly IValidator<CreateVehicleBrandCommand> _validator;
     private readonly IVehicleBrandRepository _vehicleBrandRepository;
@@ -28,7 +30,7 @@ public sealed class CreateVehicleBrandCommandHandler
         _validator = validator;
     }
 
-    public async Task<OneOf<VehicleBrandDto, ValidationException, Exception>> Handle(CreateVehicleBrandCommand request, CancellationToken cancellationToken = default)
+    public async Task<OneOf<VehicleBrandDto, ValidationException, AlreadyExistException>> Handle(CreateVehicleBrandCommand request, CancellationToken cancellationToken = default)
     {
         var validationResult = _validator.Validate(request);
         var failures = validationResult.Errors?.ToList();
@@ -37,17 +39,15 @@ public sealed class CreateVehicleBrandCommandHandler
             return new ValidationException(failures);
         }
 
-        var element = Domain.Entities.VehicleBrand.Create(request.Name);
-
-        if (await _vehicleBrandRepository.AlreadyExistsAsync(element, cancellationToken))
+        var entity = VehicleBrandEntity.Create(request.Name);
+        if (await _vehicleBrandRepository.AlreadyExistsAsync(entity, cancellationToken))
         {
-            return new Exception($"Entity {element.Name} already exists");
+            return new AlreadyExistException(entity.Name);
         }
 
-        await _vehicleBrandRepository.AddAsync(element, cancellationToken);
-
+        await _vehicleBrandRepository.AddAsync(entity, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return element.Adapt<VehicleBrandDto>();
+        return entity.Adapt<VehicleBrandDto>();
     }
 }

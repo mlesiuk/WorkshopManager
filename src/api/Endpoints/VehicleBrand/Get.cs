@@ -17,10 +17,10 @@ public sealed class Get : IEndpoint
         {
             var result = await sender.Send(new GetVehicleBrandQuery(id), cancellationToken);
             return result.Match(
-                success => Results.Created("/vehicleBrand", success),
+                success => Results.Ok(success),
                 notFound => Results.NotFound());
         })
-        .Produces<VehicleBrandDto>(StatusCodes.Status201Created, MediaTypeNames.Application.Json)
+        .Produces<VehicleBrandDto>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
         .Produces<NotFound>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
         .WithName("vehicleBrand");
     }

@@ -1,6 +1,7 @@
 ﻿namespace workshopManager.Application.Dtos;
 
-public class VehicleBrandDto
+public record class VehicleBrandDto
 {
-    public string Name { get; set; }
+    public Guid Id { get; set; } = Guid.Empty;
+    public string Name { get; set; } = string.Empty;
 }

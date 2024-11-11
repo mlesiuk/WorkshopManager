@@ -1,8 +1,6 @@
-﻿using workshopManager.Domain.Entities;
+﻿namespace workshopManager.Application.Dtos;
 
-namespace workshopManager.Application.Dtos;
-
-public class VehicleEngineDto
+public record class VehicleEngineDto
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }
