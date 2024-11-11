@@ -1,30 +1,36 @@
 ﻿using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using workshopManager.Application.Abstractions.Interfaces;
+using workshopManager.Application.Models;
 using workshopManager.Infrastructure.Persistence;
 using workshopManager.Infrastructure.Repositories;
 using workshopManager.Infrastructure.Services;
+using SecretClient = Azure.Security.KeyVault.Secrets.SecretClient;
 
 namespace workshopManager.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configurationSection)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
 
-        var secretClientName = configuration.GetSection("SecretClient:Name")?.Value;
-        services.TryAddKeyedSingleton(secretClientName, (sp, obj) =>
+        var configuration = new Configuration();
+        configurationSection
+            .GetSection("Configuration")
+            .Bind(configuration);
+
+        var secretClientName = configuration.SecretClient.Name;
+        services.TryAddKeyedSingleton(secretClientName, (serviceProvider, obj) =>
         {
             if (!string.IsNullOrEmpty(secretClientName))
             {
                 var uri = string.Format("https://{0}.vault.azure.net", secretClientName);
-                return new SecretClient(new Uri(uri), new DefaultAzureCredential());
+                return new SecretClient(new Uri(uri), new AzureCliCredential());
             }
             else
             {
@@ -47,7 +53,7 @@ public static class DependencyInjection
                 .GetAwaiter()
                 .GetResult();
 
-            options.UseSqlServer(configuration.GetConnectionString(connectionString),
+            options.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(assembly.FullName));
         });
 
