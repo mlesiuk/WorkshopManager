@@ -7,9 +7,8 @@ using workshopManager.Application.Dtos;
 
 namespace workshopManager.Application.Commands.VehicleBrand;
 
-public sealed class CreateVehicleBrandCommand : IRequest<OneOf<VehicleBrandDto, ValidationException, Exception>>
+public sealed class CreateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, Exception>>
 {
-    public string Name { get; set; } = string.Empty;
 }
 
 public sealed class CreateVehicleBrandCommandHandler 

@@ -7,7 +7,7 @@ using workshopManager.Application.Dtos;
 
 namespace workshopManager.Api.Endpoints.VehicleBrand;
 
-public class Create : IEndpoint
+public sealed class Create : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
