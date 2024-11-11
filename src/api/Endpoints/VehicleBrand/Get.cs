@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using OneOf.Types;
 using System.Net.Mime;
 using workshopManager.Application.Dtos;
+using workshopManager.Application.Exceptions;
 using workshopManager.Application.Queries.VehicleBrand;
 
 namespace workshopManager.Api.Endpoints.VehicleBrand;
@@ -21,7 +21,7 @@ public sealed class Get : IEndpoint
                 notFound => Results.NotFound());
         })
         .Produces<VehicleBrandDto>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
-        .Produces<NotFound>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
+        .Produces<NotFoundException>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
         .WithName("vehicleBrand");
     }
 }

@@ -27,17 +27,46 @@ public sealed class VehicleBrandRepository(ApplicationDbContext context) : IVehi
 		}
 
 		return false;
-	}
+    }
 
-	public async Task<VehicleBrand?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<VehicleBrand>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _vehicleBrands
+            .Where(vb => vb.Deleted == null)
+            .ToListAsync(cancellationToken) ?? [];
+    }
+
+    public async Task<VehicleBrand?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
 	{
 		return await _vehicleBrands
-			.SingleOrDefaultAsync(vb => vb.Id == id, cancellationToken);
+			.SingleOrDefaultAsync(vb => vb.Id == id && vb.Deleted == null, cancellationToken);
 	}
 
     public async Task<VehicleBrand?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
     {
         return await _vehicleBrands
-            .FirstOrDefaultAsync(vb => EF.Functions.Like(vb.Name, name), cancellationToken);
+            .FirstOrDefaultAsync(vb => EF.Functions.Like(vb.Name, name) && vb.Deleted == null, cancellationToken);
+    }
+
+	public async Task RemoveAsync(VehicleBrand vehicleBrand, CancellationToken cancellationToken = default)
+    {
+        var vehicleBrandToRemove = await _vehicleBrands
+            .SingleOrDefaultAsync(vb => vb.Id == vehicleBrand.Id && vb.Deleted == null, cancellationToken);
+        if (vehicleBrandToRemove is not null)
+        {
+            _vehicleBrands.Remove(vehicleBrandToRemove);
+        }
+    }
+
+	public async Task UpdateAsync(VehicleBrand vehicleBrand, CancellationToken cancellationToken = default)
+    {
+        var vehicleBrandToUpdate = await _vehicleBrands
+            .SingleOrDefaultAsync(vb => vb.Id == vehicleBrand.Id && vb.Deleted == null, cancellationToken);
+        if (vehicleBrandToUpdate is not null)
+        {
+            _vehicleBrands
+                .Entry(vehicleBrandToUpdate).CurrentValues
+                .SetValues(vehicleBrand);
+        }
     }
 }
