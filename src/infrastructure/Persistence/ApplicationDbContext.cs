@@ -14,7 +14,7 @@ public class ApplicationDbContext : DbContext
 
         ConfigureTables<VehicleAdditionalEquipment>(builder);
         ConfigureTables<VehicleBodyType>(builder);
-        ConfigureTables<VehicleBrand>(builder);
+        ConfigureTables<VehicleEngine>(builder);
         ConfigureTables<VehicleEngine>(builder);
         ConfigureTables<VehicleFuelType>(builder);
         ConfigureTables<VehicleGearbox>(builder);

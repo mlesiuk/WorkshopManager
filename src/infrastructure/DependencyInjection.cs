@@ -18,6 +18,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
+        services.AddScoped<IVehicleEngineRepository, VehicleEngineRepository>();
 
         var configuration = new Configuration();
         configurationSection

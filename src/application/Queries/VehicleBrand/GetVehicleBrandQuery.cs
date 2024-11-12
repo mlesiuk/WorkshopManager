@@ -4,7 +4,7 @@ using OneOf;
 using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
-using VehicleBrandEntity = workshopManager.Domain.Entities.VehicleBrand;
+using VehicleBrandEntity = workshopManager.Domain.Entities.VehicleEngine;
 
 namespace workshopManager.Application.Queries.VehicleBrand;
 

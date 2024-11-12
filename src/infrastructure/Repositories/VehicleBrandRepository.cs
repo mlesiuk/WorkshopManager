@@ -7,21 +7,21 @@ namespace workshopManager.Infrastructure.Repositories;
 
 public sealed class VehicleBrandRepository(ApplicationDbContext context) : IVehicleBrandRepository
 {
-	private readonly DbSet<VehicleBrand> _vehicleBrands = context.Set<VehicleBrand>();
+    private readonly DbSet<VehicleBrand> _vehicleBrands = context.Set<VehicleBrand>();
 
 	public async Task AddAsync(VehicleBrand entity, CancellationToken cancellationToken = default)
 	{
 		await _vehicleBrands.AddAsync(entity, cancellationToken);
 	}
 
-	public async Task<bool> AlreadyExistsAsync(VehicleBrand vehicleBrand, CancellationToken cancellationToken = default)
+	public async Task<bool> AlreadyExistsAsync(VehicleBrand entity, CancellationToken cancellationToken = default)
 	{
-		if (await GetByIdAsync(vehicleBrand.Id, cancellationToken) is not null)
+		if (await GetByIdAsync(entity.Id, cancellationToken) is not null)
 		{
 			return true;
 		}
 
-		if (await GetByNameAsync(vehicleBrand.Name, cancellationToken) is not null)
+		if (await GetByNameAsync(entity.Name, cancellationToken) is not null)
 		{
 			return true;
 		}
@@ -48,25 +48,25 @@ public sealed class VehicleBrandRepository(ApplicationDbContext context) : IVehi
             .FirstOrDefaultAsync(vb => EF.Functions.Like(vb.Name, name) && vb.Deleted == null, cancellationToken);
     }
 
-	public async Task RemoveAsync(VehicleBrand vehicleBrand, CancellationToken cancellationToken = default)
+	public async Task RemoveAsync(VehicleBrand entity, CancellationToken cancellationToken = default)
     {
         var vehicleBrandToRemove = await _vehicleBrands
-            .SingleOrDefaultAsync(vb => vb.Id == vehicleBrand.Id && vb.Deleted == null, cancellationToken);
+            .SingleOrDefaultAsync(vb => vb.Id == entity.Id && vb.Deleted == null, cancellationToken);
         if (vehicleBrandToRemove is not null)
         {
             _vehicleBrands.Remove(vehicleBrandToRemove);
         }
     }
 
-	public async Task UpdateAsync(VehicleBrand vehicleBrand, CancellationToken cancellationToken = default)
+	public async Task UpdateAsync(VehicleBrand entity, CancellationToken cancellationToken = default)
     {
         var vehicleBrandToUpdate = await _vehicleBrands
-            .SingleOrDefaultAsync(vb => vb.Id == vehicleBrand.Id && vb.Deleted == null, cancellationToken);
+            .SingleOrDefaultAsync(vb => vb.Id == entity.Id && vb.Deleted == null, cancellationToken);
         if (vehicleBrandToUpdate is not null)
         {
             _vehicleBrands
                 .Entry(vehicleBrandToUpdate).CurrentValues
-                .SetValues(vehicleBrand);
+                .SetValues(entity);
         }
     }
 }
