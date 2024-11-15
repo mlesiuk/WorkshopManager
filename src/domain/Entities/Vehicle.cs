@@ -6,7 +6,7 @@ public class Vehicle : BaseEntity
     public VehicleBodyType? BodyType { get; set; }
     public VehicleEngine? Brand { get; set; }
     public VehicleEngine? Engine { get; set; }
-    public VehicleFuelType FuelType { get; set; } = new();
+    public VehicleFuelType? FuelType { get; set; }
     public VehicleGearbox Gearbox { get; set; } = new();
     public VehicleGeneration Generation { get; set; } = new();
     public DateTime ManufactureDate { get; set; }

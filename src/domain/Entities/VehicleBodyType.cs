@@ -10,4 +10,9 @@ public class VehicleBodyType : BaseEntity
     {
         return new VehicleBodyType { Name = name };
     }
+
+    public void UpdateName(string name)
+    {
+        Name = name;
+    }
 }

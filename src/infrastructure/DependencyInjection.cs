@@ -17,8 +17,10 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configurationSection)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
         services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
         services.AddScoped<IVehicleEngineRepository, VehicleEngineRepository>();
+        services.AddScoped<IVehicleFuelTypeRepository, VehicleFuelTypeRepository>();
 
         var configuration = new Configuration();
         configurationSection
