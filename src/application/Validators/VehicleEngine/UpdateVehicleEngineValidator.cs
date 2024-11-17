@@ -3,9 +3,9 @@ using workshopManager.Application.Commands.VehicleEngine;
 
 namespace workshopManager.Application.Validators.VehicleEngine;
 
-public sealed class CreateVehicleEngineValidator : AbstractValidator<CreateVehicleEngineCommand>
+public sealed class UpdateVehicleEngineValidator : AbstractValidator<UpdateVehicleEngineCommand>
 {
-    public CreateVehicleEngineValidator()
+    public UpdateVehicleEngineValidator()
     {
         RuleFor(ve => ve.Name)
             .NotNull()

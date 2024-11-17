@@ -6,10 +6,10 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Commands.VehicleFuelType;
 
-public record DeleteVehicleFuelTypeCommand : VehicleFuelTypeDto, IRequest<OneOf<bool, NotFoundException>>;
+public sealed record class DeleteVehicleFuelTypeCommand : VehicleFuelTypeDto, IRequest<OneOf<bool, NotFoundException>>;
 
 public sealed class DeleteVehicleFuelTypeCommandHandler
-: IRequestHandler<DeleteVehicleFuelTypeCommand, OneOf<bool, NotFoundException>>
+    : IRequestHandler<DeleteVehicleFuelTypeCommand, OneOf<bool, NotFoundException>>
 {
     private readonly IVehicleFuelTypeRepository _vehicleFuelTypeRepository;
     private readonly IUnitOfWork _unitOfWork;

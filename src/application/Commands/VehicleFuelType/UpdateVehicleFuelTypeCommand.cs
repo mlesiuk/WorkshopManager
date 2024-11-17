@@ -8,7 +8,7 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Commands.VehicleFuelType;
 
-public record UpdateVehicleFuelTypeCommand(Guid Id, string Name) : IRequest<OneOf<VehicleFuelTypeDto, ValidationException, NotFoundException>>;
+public sealed record class UpdateVehicleFuelTypeCommand(Guid Id, string Name) : IRequest<OneOf<VehicleFuelTypeDto, ValidationException, NotFoundException>>;
 
 public sealed class UpdateVehicleFuelTypeCommandHandler
     : IRequestHandler<UpdateVehicleFuelTypeCommand, OneOf<VehicleFuelTypeDto, ValidationException, NotFoundException>>

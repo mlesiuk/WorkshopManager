@@ -6,9 +6,9 @@ using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
 
-public record UpdateVehicleEngineCommand : VehicleEngineDto, IRequest<OneOf<VehicleEngineDto, ValidationException, NotFoundException>>
-{
-}
+namespace workshopManager.Application.Commands.VehicleEngine;
+
+public sealed record class UpdateVehicleEngineCommand : VehicleEngineDto, IRequest<OneOf<VehicleEngineDto, ValidationException, NotFoundException>>;
 
 public sealed class UpdateVehicleEngineCommandHandler
     : IRequestHandler<UpdateVehicleEngineCommand, OneOf<VehicleEngineDto, ValidationException, NotFoundException>>

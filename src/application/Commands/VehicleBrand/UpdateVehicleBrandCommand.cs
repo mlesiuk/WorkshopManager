@@ -8,7 +8,7 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Commands.VehicleBrand;
 
-public record UpdateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, NotFoundException>>;
+public sealed record class UpdateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, NotFoundException>>;
 
 public sealed class UpdateVehicleBrandCommandHandler
     : IRequestHandler<UpdateVehicleBrandCommand, OneOf<VehicleBrandDto, ValidationException, NotFoundException>>

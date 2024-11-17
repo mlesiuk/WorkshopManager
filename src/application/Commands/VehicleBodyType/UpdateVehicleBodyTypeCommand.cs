@@ -8,7 +8,7 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Commands.VehicleBodyType;
 
-public record UpdateVehicleBodyTypeCommand : VehicleBodyTypeDto, IRequest<OneOf<VehicleBodyTypeDto, ValidationException, NotFoundException>>;
+public sealed record class UpdateVehicleBodyTypeCommand : VehicleBodyTypeDto, IRequest<OneOf<VehicleBodyTypeDto, ValidationException, NotFoundException>>;
 
 public sealed class UpdateVehicleBodyTypeCommandHandler
     : IRequestHandler<UpdateVehicleBodyTypeCommand, OneOf<VehicleBodyTypeDto, ValidationException, NotFoundException>>

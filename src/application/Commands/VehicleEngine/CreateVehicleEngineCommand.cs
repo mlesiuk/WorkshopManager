@@ -9,9 +9,7 @@ using VehicleEngineEntity = workshopManager.Domain.Entities.VehicleEngine;
 
 namespace workshopManager.Application.Commands.VehicleEngine;
 
-public record class CreateVehicleEngineCommand : VehicleEngineDto, IRequest<OneOf<VehicleEngineDto, ValidationException, AlreadyExistException>>
-{
-}
+public sealed record class CreateVehicleEngineCommand : VehicleEngineDto, IRequest<OneOf<VehicleEngineDto, ValidationException, AlreadyExistException>>;
 
 public sealed class CreateVehicleEngineCommandHandler
     : IRequestHandler<CreateVehicleEngineCommand, OneOf<VehicleEngineDto, ValidationException, AlreadyExistException>>

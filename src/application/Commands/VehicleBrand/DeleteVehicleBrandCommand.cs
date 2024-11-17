@@ -5,7 +5,7 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Commands.VehicleBrand;
 
-public record DeleteVehicleBrandCommand(Guid Id) : IRequest<OneOf<bool, NotFoundException>>;
+public sealed record class DeleteVehicleBrandCommand(Guid Id) : IRequest<OneOf<bool, NotFoundException>>;
 
 public sealed class DeleteVehicleBrandCommandHandler
     : IRequestHandler<DeleteVehicleBrandCommand, OneOf<bool, NotFoundException>>

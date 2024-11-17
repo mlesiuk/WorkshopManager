@@ -9,10 +9,10 @@ using VehicleFuelTypeEntity = workshopManager.Domain.Entities.VehicleFuelType;
 
 namespace workshopManager.Application.Commands.VehicleFuelType;
 
-public record CreateVehicleFuelTypeCommand : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, ValidationException, AlreadyExistException>>;
+public sealed record class CreateVehicleFuelTypeCommand : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, ValidationException, AlreadyExistException>>;
 
 public sealed class CreateVehicleFuelTypeCommandHandler
-: IRequestHandler<CreateVehicleFuelTypeCommand, OneOf<VehicleFuelTypeDto, ValidationException, AlreadyExistException>>
+    : IRequestHandler<CreateVehicleFuelTypeCommand, OneOf<VehicleFuelTypeDto, ValidationException, AlreadyExistException>>
 {
     private readonly IValidator<CreateVehicleFuelTypeCommand> _validator;
     private readonly IVehicleFuelTypeRepository _fuelTypeRepository;

@@ -3,9 +3,9 @@ using workshopManager.Application.Commands.VehicleBrand;
 
 namespace workshopManager.Application.Validators.VehicleBrand;
 
-public sealed class CreateVehicleBrandValidator : AbstractValidator<CreateVehicleBrandCommand>
+public sealed class UpdateVehicleBrandValidator : AbstractValidator<UpdateVehicleBrandCommand>
 {
-    public CreateVehicleBrandValidator()
+    public UpdateVehicleBrandValidator()
     {
         RuleFor(vb => vb.Name)
             .NotNull()

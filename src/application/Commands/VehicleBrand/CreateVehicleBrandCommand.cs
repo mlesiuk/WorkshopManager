@@ -9,9 +9,7 @@ using VehicleBrandEntity = workshopManager.Domain.Entities.VehicleBrand;
 
 namespace workshopManager.Application.Commands.VehicleBrand;
 
-public sealed record CreateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, AlreadyExistException>>
-{
-}
+public sealed record class CreateVehicleBrandCommand : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, ValidationException, AlreadyExistException>>;
 
 public sealed class CreateVehicleBrandCommandHandler 
     : IRequestHandler<CreateVehicleBrandCommand, OneOf<VehicleBrandDto, ValidationException, AlreadyExistException>>

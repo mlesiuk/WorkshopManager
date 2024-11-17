@@ -9,7 +9,7 @@ using VehicleBodyTypeEntity = workshopManager.Domain.Entities.VehicleBodyType;
 
 namespace workshopManager.Application.Commands.VehicleBodyType;
 
-public record CreateVehicleBodyTypeCommand(string Name) : IRequest<OneOf<VehicleBodyTypeDto, ValidationException, AlreadyExistException>>;
+public sealed record class CreateVehicleBodyTypeCommand(string Name) : IRequest<OneOf<VehicleBodyTypeDto, ValidationException, AlreadyExistException>>;
 
 public sealed class CreateVehicleBodyTypeCommandHandler
     : IRequestHandler<CreateVehicleBodyTypeCommand, OneOf<VehicleBodyTypeDto, ValidationException, AlreadyExistException>>
