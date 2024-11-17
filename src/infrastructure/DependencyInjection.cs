@@ -16,11 +16,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configurationSection)
     {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
-        services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
-        services.AddScoped<IVehicleEngineRepository, VehicleEngineRepository>();
-        services.AddScoped<IVehicleFuelTypeRepository, VehicleFuelTypeRepository>();
+        services.AddRepositories();
 
         var configuration = new Configuration();
         configurationSection
@@ -59,6 +55,22 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(assembly.FullName));
         });
+
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this  IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IVehicleAdditionalEquipmentRepository, VehicleAdditionalEquipmentRepository>();
+        services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
+        services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
+        services.AddScoped<IVehicleEngineRepository, VehicleEngineRepository>();
+        services.AddScoped<IVehicleFuelTypeRepository, VehicleFuelTypeRepository>();
+        services.AddScoped<IVehicleGearboxRepository, VehicleGearboxRepository>();
+        services.AddScoped<IVehicleGenerationRepository, VehicleGenerationRepository>();
+        services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
+        services.AddScoped<IVehiclePropulsionRepository, VehiclePropulsionRepository>();
 
         return services;
     }

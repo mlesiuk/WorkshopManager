@@ -14,14 +14,14 @@ public sealed class VehicleEngineRepository(ApplicationDbContext context) : IVeh
 		await _vehicleEngines.AddAsync(entity, cancellationToken);
 	}
 
-	public async Task<bool> AlreadyExistsAsync(VehicleEngine vehicleEngine, CancellationToken cancellationToken = default)
+	public async Task<bool> AlreadyExistsAsync(VehicleEngine entity, CancellationToken cancellationToken = default)
 	{
-		if (await GetByIdAsync(vehicleEngine.Id, cancellationToken) is not null)
+		if (await GetByIdAsync(entity.Id, cancellationToken) is not null)
 		{
 			return true;
 		}
 
-		if (await GetByNameAsync(vehicleEngine.Name, cancellationToken) is not null)
+		if (await GetByNameAsync(entity.Name, cancellationToken) is not null)
 		{
 			return true;
 		}
@@ -48,25 +48,25 @@ public sealed class VehicleEngineRepository(ApplicationDbContext context) : IVeh
             .FirstOrDefaultAsync(ve => EF.Functions.Like(ve.Name, name) && ve.Deleted == null, cancellationToken);
     }
 
-	public async Task RemoveAsync(VehicleEngine vehicleEngine, CancellationToken cancellationToken = default)
+	public async Task RemoveAsync(VehicleEngine entity, CancellationToken cancellationToken = default)
     {
-        var vehicleEngineToRemove = await _vehicleEngines
-            .SingleOrDefaultAsync(ve => ve.Id == vehicleEngine.Id && ve.Deleted == null, cancellationToken);
-        if (vehicleEngineToRemove is not null)
+        var entityToRemove = await _vehicleEngines
+            .SingleOrDefaultAsync(ve => ve.Id == entity.Id && ve.Deleted == null, cancellationToken);
+        if (entityToRemove is not null)
         {
-            _vehicleEngines.Remove(vehicleEngineToRemove);
+            _vehicleEngines.Remove(entityToRemove);
         }
     }
 
-	public async Task UpdateAsync(VehicleEngine vehicleEngine, CancellationToken cancellationToken = default)
+	public async Task UpdateAsync(VehicleEngine entity, CancellationToken cancellationToken = default)
     {
-        var vehicleEngineToUpdate = await _vehicleEngines
-            .SingleOrDefaultAsync(ve => ve.Id == vehicleEngine.Id && ve.Deleted == null, cancellationToken);
-        if (vehicleEngineToUpdate is not null)
+        var entityToUpdate = await _vehicleEngines
+            .SingleOrDefaultAsync(ve => ve.Id == entity.Id && ve.Deleted == null, cancellationToken);
+        if (entityToUpdate is not null)
         {
             _vehicleEngines
-                .Entry(vehicleEngineToUpdate).CurrentValues
-                .SetValues(vehicleEngine);
+                .Entry(entityToUpdate).CurrentValues
+                .SetValues(entity);
         }
     }
 }

@@ -14,14 +14,14 @@ public sealed class VehicleFuelTypeRepository(ApplicationDbContext context) : IV
         await _vehicleFuelTypes.AddAsync(entity, cancellationToken);
     }
 
-    public async Task<bool> AlreadyExistsAsync(VehicleFuelType VehicleFuelType, CancellationToken cancellationToken = default)
+    public async Task<bool> AlreadyExistsAsync(VehicleFuelType entity, CancellationToken cancellationToken = default)
     {
-        if (await GetByIdAsync(VehicleFuelType.Id, cancellationToken) is not null)
+        if (await GetByIdAsync(entity.Id, cancellationToken) is not null)
         {
             return true;
         }
 
-        if (await GetByNameAsync(VehicleFuelType.Name, cancellationToken) is not null)
+        if (await GetByNameAsync(entity.Name, cancellationToken) is not null)
         {
             return true;
         }

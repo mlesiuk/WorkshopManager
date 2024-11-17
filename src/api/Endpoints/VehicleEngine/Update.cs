@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using System.Net.Mime;
+using workshopManager.Application.Commands.VehicleEngine;
 using workshopManager.Application.Dtos;
 
 namespace workshopManager.Api.Endpoints.VehicleEngine;

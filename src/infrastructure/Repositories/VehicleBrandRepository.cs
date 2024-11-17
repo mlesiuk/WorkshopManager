@@ -50,22 +50,22 @@ public sealed class VehicleBrandRepository(ApplicationDbContext context) : IVehi
 
 	public async Task RemoveAsync(VehicleBrand entity, CancellationToken cancellationToken = default)
     {
-        var vehicleBrandToRemove = await _vehicleBrands
+        var entityToRemove = await _vehicleBrands
             .SingleOrDefaultAsync(vb => vb.Id == entity.Id && vb.Deleted == null, cancellationToken);
-        if (vehicleBrandToRemove is not null)
+        if (entityToRemove is not null)
         {
-            _vehicleBrands.Remove(vehicleBrandToRemove);
+            _vehicleBrands.Remove(entityToRemove);
         }
     }
 
 	public async Task UpdateAsync(VehicleBrand entity, CancellationToken cancellationToken = default)
     {
-        var vehicleBrandToUpdate = await _vehicleBrands
+        var entityToUpdate = await _vehicleBrands
             .SingleOrDefaultAsync(vb => vb.Id == entity.Id && vb.Deleted == null, cancellationToken);
-        if (vehicleBrandToUpdate is not null)
+        if (entityToUpdate is not null)
         {
             _vehicleBrands
-                .Entry(vehicleBrandToUpdate).CurrentValues
+                .Entry(entityToUpdate).CurrentValues
                 .SetValues(entity);
         }
     }
