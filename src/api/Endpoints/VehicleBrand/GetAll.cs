@@ -13,9 +13,9 @@ public sealed class GetAll : IEndpoint
             ISender sender,
             CancellationToken cancellationToken = default) =>
         {
-            return Results.Ok(await sender.Send(new GetVehicleBrandsQuery(), cancellationToken));
+            return Results.Ok(await sender.Send(new GetAllVehicleBrandsQuery(), cancellationToken));
         })
         .Produces<IEnumerable<VehicleBrandDto>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
-        .WithName("vehicleBrands");
+        .WithName("getAllVehicleBrands");
     }
 }

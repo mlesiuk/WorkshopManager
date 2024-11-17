@@ -5,11 +5,11 @@ using workshopManager.Application.Dtos;
 
 namespace workshopManager.Application.Queries.VehicleBrand;
 
-public sealed record class GetVehicleBrandsQuery : VehicleBrandDto, IRequest<IEnumerable<VehicleBrandDto>> { }
+public sealed record class GetAllVehicleBrandsQuery : VehicleBrandDto, IRequest<IEnumerable<VehicleBrandDto>> { }
 
-public sealed class GetVehicleBrandsQueryHandler(IVehicleBrandRepository repository) : IRequestHandler<GetVehicleBrandsQuery, IEnumerable<VehicleBrandDto>>
+public sealed class GetAllVehicleBrandsQueryHandler(IVehicleBrandRepository repository) : IRequestHandler<GetAllVehicleBrandsQuery, IEnumerable<VehicleBrandDto>>
 {
-    public async Task<IEnumerable<VehicleBrandDto>> Handle(GetVehicleBrandsQuery request, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<VehicleBrandDto>> Handle(GetAllVehicleBrandsQuery request, CancellationToken cancellationToken = default)
     {
         var entities = await repository.GetAllAsync(cancellationToken);
         if (entities.Any())

@@ -7,9 +7,9 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Queries.VehicleEngine;
 
-public record GetVehicleEngineByIdQuery(Guid Id) : IRequest<OneOf<VehicleEngineDto, NotFoundException>>;
+public record GetVehicleEngineQuery(Guid Id) : IRequest<OneOf<VehicleEngineDto, NotFoundException>>;
 
-public sealed class GetVehicleEngineByIdQueryHandler : IRequestHandler<GetVehicleEngineByIdQuery, OneOf<VehicleEngineDto, NotFoundException>>
+public sealed class GetVehicleEngineByIdQueryHandler : IRequestHandler<GetVehicleEngineQuery, OneOf<VehicleEngineDto, NotFoundException>>
 {
     private readonly IVehicleEngineRepository _vehicleEngineRepository;
 
@@ -18,7 +18,7 @@ public sealed class GetVehicleEngineByIdQueryHandler : IRequestHandler<GetVehicl
         _vehicleEngineRepository = vehicleEngineRepository;
     }
 
-    public async Task<OneOf<VehicleEngineDto, NotFoundException>> Handle(GetVehicleEngineByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OneOf<VehicleEngineDto, NotFoundException>> Handle(GetVehicleEngineQuery request, CancellationToken cancellationToken)
     {
         var entity = await _vehicleEngineRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)

@@ -7,18 +7,19 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Queries.VehicleFuelType;
 
-public record GetVehicleFuelTypeByIdQuery : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, NotFoundException>>;
+public record GetVehicleFuelTypeQuery : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, NotFoundException>>;
 
-public sealed class GetVehicleFuelTypeByIdQueryHandler : IRequestHandler<GetVehicleFuelTypeByIdQuery, OneOf<VehicleFuelTypeDto, NotFoundException>>
+public sealed class GetVehicleFuelTypeQueryHandler 
+    : IRequestHandler<GetVehicleFuelTypeQuery, OneOf<VehicleFuelTypeDto, NotFoundException>>
 {
     private readonly IVehicleFuelTypeRepository _vehicleFuelTypeRepository;
 
-    public GetVehicleFuelTypeByIdQueryHandler(IVehicleFuelTypeRepository vehicleFuelTypeRepository)
+    public GetVehicleFuelTypeQueryHandler(IVehicleFuelTypeRepository vehicleFuelTypeRepository)
     {
         _vehicleFuelTypeRepository = vehicleFuelTypeRepository;
     }
 
-    public async Task<OneOf<VehicleFuelTypeDto, NotFoundException>> Handle(GetVehicleFuelTypeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OneOf<VehicleFuelTypeDto, NotFoundException>> Handle(GetVehicleFuelTypeQuery request, CancellationToken cancellationToken)
     {
         var entity = await _vehicleFuelTypeRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)
