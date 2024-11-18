@@ -4,7 +4,7 @@ public class Vehicle : BaseEntity
 {
     public List<VehicleAdditionalEquipment>? AdditionalEquipment { get; set; }
     public VehicleBodyType? BodyType { get; set; }
-    public VehicleEngine? Brand { get; set; }
+    public VehicleBrand? Brand { get; set; }
     public VehicleEngine? Engine { get; set; }
     public VehicleFuelType? FuelType { get; set; }
     public VehicleGearbox? Gearbox { get; set; }

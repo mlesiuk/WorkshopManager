@@ -4,17 +4,15 @@ using workshopManager.Domain.Entities;
 
 namespace workshopManager.Infrastructure.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         ConfigureTables<VehicleAdditionalEquipment>(builder);
         ConfigureTables<VehicleBodyType>(builder);
-        ConfigureTables<VehicleEngine>(builder);
+        ConfigureTables<VehicleBrand>(builder);
         ConfigureTables<VehicleEngine>(builder);
         ConfigureTables<VehicleFuelType>(builder);
         ConfigureTables<VehicleGearbox>(builder);
@@ -54,7 +52,7 @@ public class ApplicationDbContext : DbContext
     protected static void ConfigureTables<T>(ModelBuilder modelBuilder) where T : BaseEntity
     {
         modelBuilder.Entity<T>()
-            .ToTable($"{nameof(T)[0].ToString().ToLower()}{nameof(T).ToString()[1..]}")
+            .ToTable(typeof(T).Name)
             .HasKey(e => e.Id)
             .IsClustered(false);
 

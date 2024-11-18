@@ -7,7 +7,13 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Queries.VehicleBrand;
 
-public sealed record class GetVehicleBrandQuery(Guid Id) : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, NotFoundException>>;
+public sealed record class GetVehicleBrandQuery : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, NotFoundException>>
+{
+    public GetVehicleBrandQuery(Guid id)
+    {
+        Id = id;
+    }
+}
 
 public sealed class GetVehicleBrandQueryHandler(IVehicleBrandRepository repository) : IRequestHandler<GetVehicleBrandQuery, OneOf<VehicleBrandDto, NotFoundException>>
 {
