@@ -15,16 +15,16 @@ public sealed class CreateVehicleFuelTypeCommandHandler
     : IRequestHandler<CreateVehicleFuelTypeCommand, OneOf<VehicleFuelTypeDto, ValidationException, AlreadyExistException>>
 {
     private readonly IValidator<CreateVehicleFuelTypeCommand> _validator;
-    private readonly IVehicleFuelTypeRepository _fuelTypeRepository;
+    private readonly IVehicleFuelTypeRepository _vehicleFuelTypeRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateVehicleFuelTypeCommandHandler(
         IValidator<CreateVehicleFuelTypeCommand> validator,
-        IVehicleFuelTypeRepository fuelTypeRepository,
+        IVehicleFuelTypeRepository vehicleFuelTypeRepository,
         IUnitOfWork unitOfWork)
     {
         _validator = validator;
-        _fuelTypeRepository = fuelTypeRepository;
+        _vehicleFuelTypeRepository = vehicleFuelTypeRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -37,12 +37,12 @@ public sealed class CreateVehicleFuelTypeCommandHandler
         }
 
         var entity = VehicleFuelTypeEntity.Create(request.Name);
-        if (await _fuelTypeRepository.AlreadyExistsAsync(entity, cancellationToken))
+        if (await _vehicleFuelTypeRepository.AlreadyExistsAsync(entity, cancellationToken))
         {
             return new AlreadyExistException(entity.Name);
         }
 
-        await _fuelTypeRepository.AddAsync(entity, cancellationToken);
+        await _vehicleFuelTypeRepository.AddAsync(entity, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return entity.Adapt<VehicleFuelTypeDto>();

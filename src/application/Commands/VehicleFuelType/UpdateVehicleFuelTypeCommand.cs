@@ -8,22 +8,22 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Commands.VehicleFuelType;
 
-public sealed record class UpdateVehicleFuelTypeCommand(Guid Id, string Name) : IRequest<OneOf<VehicleFuelTypeDto, ValidationException, NotFoundException>>;
+public sealed record class UpdateVehicleFuelTypeCommand : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, ValidationException, NotFoundException>>;
 
 public sealed class UpdateVehicleFuelTypeCommandHandler
     : IRequestHandler<UpdateVehicleFuelTypeCommand, OneOf<VehicleFuelTypeDto, ValidationException, NotFoundException>>
 {
     private readonly IValidator<UpdateVehicleFuelTypeCommand> _validator;
-    private readonly IVehicleFuelTypeRepository _fuelTypeRepository;
+    private readonly IVehicleFuelTypeRepository _vehicleFuelTypeRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateVehicleFuelTypeCommandHandler(
         IValidator<UpdateVehicleFuelTypeCommand> validator,
-        IVehicleFuelTypeRepository fuelTypeRepository,
+        IVehicleFuelTypeRepository vehicleFuelTypeRepository,
         IUnitOfWork unitOfWork)
     {
         _validator = validator;
-        _fuelTypeRepository = fuelTypeRepository;
+        _vehicleFuelTypeRepository = vehicleFuelTypeRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -35,7 +35,7 @@ public sealed class UpdateVehicleFuelTypeCommandHandler
             return new ValidationException(validationResult.Errors);
         }
 
-        var entity = await _fuelTypeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var entity = await _vehicleFuelTypeRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)
         {
             return new NotFoundException($"Fuel type with ID {request.Id} not found.");

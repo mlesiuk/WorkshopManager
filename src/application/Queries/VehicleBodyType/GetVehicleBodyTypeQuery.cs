@@ -7,10 +7,10 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Queries.VehicleBodyType;
 
-public record GetVehicleBodyTypeByIdQuery : VehicleBodyTypeDto, IRequest<OneOf<VehicleBodyTypeDto, NotFoundException>>;
+public sealed record class GetVehicleBodyTypeQuery : VehicleBodyTypeDto, IRequest<OneOf<VehicleBodyTypeDto, NotFoundException>>;
 
 public sealed class GetVehicleBodyTypeByIdQueryHandler 
-    : IRequestHandler<GetVehicleBodyTypeByIdQuery, OneOf<VehicleBodyTypeDto, NotFoundException>>
+    : IRequestHandler<GetVehicleBodyTypeQuery, OneOf<VehicleBodyTypeDto, NotFoundException>>
 {
     private readonly IVehicleBodyTypeRepository _vehicleBodyTypeRepository;
 
@@ -19,7 +19,7 @@ public sealed class GetVehicleBodyTypeByIdQueryHandler
         _vehicleBodyTypeRepository = vehicleBodyTypeRepository;
     }
 
-    public async Task<OneOf<VehicleBodyTypeDto, NotFoundException>> Handle(GetVehicleBodyTypeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OneOf<VehicleBodyTypeDto, NotFoundException>> Handle(GetVehicleBodyTypeQuery request, CancellationToken cancellationToken)
     {
         var entity = await _vehicleBodyTypeRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)

@@ -7,7 +7,7 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Queries.VehicleFuelType;
 
-public record GetVehicleFuelTypeQuery : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, NotFoundException>>;
+public sealed record class GetVehicleFuelTypeQuery : VehicleFuelTypeDto, IRequest<OneOf<VehicleFuelTypeDto, NotFoundException>>;
 
 public sealed class GetVehicleFuelTypeQueryHandler 
     : IRequestHandler<GetVehicleFuelTypeQuery, OneOf<VehicleFuelTypeDto, NotFoundException>>

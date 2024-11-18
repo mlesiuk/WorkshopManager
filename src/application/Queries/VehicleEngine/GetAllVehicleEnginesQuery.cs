@@ -5,7 +5,7 @@ using workshopManager.Application.Dtos;
 
 namespace workshopManager.Application.Queries.VehicleEngine;
 
-public record GetAllVehicleEnginesQuery : IRequest<List<VehicleEngineDto>>;
+public sealed record class GetAllVehicleEnginesQuery : IRequest<List<VehicleEngineDto>>;
 
 public sealed class GetAllVehicleEnginesQueryHandler : IRequestHandler<GetAllVehicleEnginesQuery, List<VehicleEngineDto>>
 {

@@ -4,23 +4,10 @@ using OneOf;
 using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
-using VehicleBrandEntity = workshopManager.Domain.Entities.VehicleEngine;
 
 namespace workshopManager.Application.Queries.VehicleBrand;
 
-public sealed record class GetVehicleBrandQuery : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, NotFoundException>>
-{
-    public GetVehicleBrandQuery(Guid id)
-    {
-        Id = id;
-    }
-
-    public GetVehicleBrandQuery(VehicleBrandEntity vehicleBrand)
-    {
-        Id = vehicleBrand.Id;
-        Name = vehicleBrand.Name;
-    }
-}
+public sealed record class GetVehicleBrandQuery(Guid Id) : VehicleBrandDto, IRequest<OneOf<VehicleBrandDto, NotFoundException>>;
 
 public sealed class GetVehicleBrandQueryHandler(IVehicleBrandRepository repository) : IRequestHandler<GetVehicleBrandQuery, OneOf<VehicleBrandDto, NotFoundException>>
 {

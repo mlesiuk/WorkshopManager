@@ -14,16 +14,16 @@ public sealed class UpdateVehicleBrandCommandHandler
     : IRequestHandler<UpdateVehicleBrandCommand, OneOf<VehicleBrandDto, ValidationException, NotFoundException>>
 {
     private readonly IValidator<UpdateVehicleBrandCommand> _validator;
-    private readonly IVehicleBrandRepository _bodyTypeRepository;
+    private readonly IVehicleBrandRepository _vehicleBrandRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateVehicleBrandCommandHandler(
         IValidator<UpdateVehicleBrandCommand> validator,
-        IVehicleBrandRepository bodyTypeRepository,
+        IVehicleBrandRepository vehicleRepository,
         IUnitOfWork unitOfWork)
     {
         _validator = validator;
-        _bodyTypeRepository = bodyTypeRepository;
+        _vehicleBrandRepository = vehicleRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -35,7 +35,7 @@ public sealed class UpdateVehicleBrandCommandHandler
             return new ValidationException(validationResult.Errors);
         }
 
-        var entity = await _bodyTypeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var entity = await _vehicleBrandRepository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null)
         {
             return new NotFoundException($"Body type with ID {request.Id} not found.");

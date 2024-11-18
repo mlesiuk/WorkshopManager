@@ -5,7 +5,7 @@ using workshopManager.Application.Dtos;
 
 namespace workshopManager.Application.Queries.VehicleFuelType;
 
-public record GetAllVehicleFuelTypesQuery : IRequest<List<VehicleFuelTypeDto>>;
+public sealed record class GetAllVehicleFuelTypesQuery : IRequest<List<VehicleFuelTypeDto>>;
 
 public sealed class GetAllVehicleFuelTypesQueryHandler : IRequestHandler<GetAllVehicleFuelTypesQuery, List<VehicleFuelTypeDto>>
 {

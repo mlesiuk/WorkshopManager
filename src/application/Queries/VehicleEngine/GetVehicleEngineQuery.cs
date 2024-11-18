@@ -7,7 +7,7 @@ using workshopManager.Application.Exceptions;
 
 namespace workshopManager.Application.Queries.VehicleEngine;
 
-public record GetVehicleEngineQuery(Guid Id) : IRequest<OneOf<VehicleEngineDto, NotFoundException>>;
+public sealed record class GetVehicleEngineQuery(Guid Id) : IRequest<OneOf<VehicleEngineDto, NotFoundException>>;
 
 public sealed class GetVehicleEngineByIdQueryHandler : IRequestHandler<GetVehicleEngineQuery, OneOf<VehicleEngineDto, NotFoundException>>
 {
