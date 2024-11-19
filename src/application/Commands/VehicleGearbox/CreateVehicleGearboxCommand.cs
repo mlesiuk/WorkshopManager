@@ -48,4 +48,3 @@ public sealed class CreateVehicleGearboxCommandHandler
         return entity.Adapt<VehicleGearboxDto>();
     }
 }
-

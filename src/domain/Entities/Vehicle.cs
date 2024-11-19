@@ -8,10 +8,10 @@ public class Vehicle : BaseEntity
     public VehicleEngine? Engine { get; set; }
     public VehicleFuelType? FuelType { get; set; }
     public VehicleGearbox? Gearbox { get; set; }
-    public VehicleGeneration Generation { get; set; } = new();
+    public VehicleGeneration? Generation { get; set; }
     public DateTime ManufactureDate { get; set; }
-    public VehicleModel Model { get; set; } = new();
-    public VehiclePropulsion Propulsion { get; set; } = new();
+    public VehicleModel? Model { get; set; }
+    public VehiclePropulsion? Propulsion { get; set; }
     public string? RegistrationNumber { get; set; }
     public string? VinNumber { get; set; }
 }
