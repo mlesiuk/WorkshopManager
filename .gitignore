@@ -24,7 +24,10 @@ Thumbs.db
 *.mov
 *.wmv
 *.tfvars
+.env.*
 .vs/*
+.containers/*
+src/presentation/appsettings.*.json
 src/api/bin/
 src/api/obj/
 src/api/appsettings.*.json

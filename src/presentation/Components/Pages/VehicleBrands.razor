@@ -1,0 +1,43 @@
+﻿@page "/vehicleBrands"
+@using workshopManager.Presentation.Services
+@inject IApiService _apiService
+@attribute [StreamRendering]
+
+<PageTitle>Vehicle brands</PageTitle>
+
+<h1>Vehicle brands</h1>
+
+<p>This component demonstrates showing data.</p>
+
+
+@if (vehicleBrands == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Brand</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicleBrand in vehicleBrands)
+            {
+                <tr>
+                    <td>@vehicleBrand.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<VehicleBrand>? vehicleBrands;
+
+    protected override async Task OnInitializedAsync()
+    {
+        vehicleBrands = await _apiService.GetVehicleBrandsAsync(CancellationToken.None);
+    }
+}
