@@ -41,3 +41,5 @@ src/presentation/bin/
 src/presentation/obj/
 terraform/.terraform
 tfplan
+/obj/*
+/bin/*
