@@ -11,7 +11,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         ConfigureTables<Customer>(builder);
-        ConfigureTables<ServiceAssignment>(builder);
+        ConfigureTables<ServiceRequest>(builder);
         ConfigureTables<VehicleAdditionalEquipment>(builder);
         ConfigureTables<VehicleBodyType>(builder);
         ConfigureTables<VehicleBrand>(builder);

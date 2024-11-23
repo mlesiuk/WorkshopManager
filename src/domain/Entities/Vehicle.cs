@@ -2,6 +2,7 @@
 
 public class Vehicle : BaseEntity
 {
+    public string Name { get; set; } = string.Empty;
     public List<VehicleAdditionalEquipment>? AdditionalEquipment { get; set; }
     public VehicleBodyType? BodyType { get; set; }
     public VehicleBrand? Brand { get; set; }

@@ -67,6 +67,26 @@ public sealed class Customer : BaseEntity
         AddAddress(AddressType.Delivery, city, street, number, apartment, postalCode, country, region);
     }
 
+    public void AddVehicle(Vehicle vehicle)
+    {
+        if (Vehicles.Contains(vehicle))
+        {
+            throw new InvalidOperationException("Vehicle is already binded to Customer");
+        }
+
+        Vehicles.Add(vehicle);
+    }
+
+    public void RemoveVehicle(Vehicle vehicle)
+    {
+        if (!Vehicles.Contains(vehicle))
+        {
+            throw new InvalidOperationException("Vehicle is not binded to Customer");
+        }
+
+        Vehicles.Remove(vehicle);
+    }
+
     private void AddAddress(
         AddressType type,
         string city,
