@@ -9,7 +9,9 @@ public sealed class Customer : BaseEntity
     public IDictionary<AddressType, Address> Addresses { get; set; } = new Dictionary<AddressType, Address>();
     public string Phone { get; set; }
     public string Email { get; set; }
-    public ICollection<Vehicle> Vehicles { get; set; } = [];
+
+    private readonly ICollection<Vehicle> vehicles = [];
+    public ICollection<Vehicle> Vehicles => vehicles;
 
     private Customer(
         string firstName,
@@ -69,22 +71,31 @@ public sealed class Customer : BaseEntity
 
     public void AddVehicle(Vehicle vehicle)
     {
-        if (Vehicles.Contains(vehicle))
+        if (vehicles.Contains(vehicle))
         {
             throw new InvalidOperationException("Vehicle is already binded to Customer");
         }
 
-        Vehicles.Add(vehicle);
+        vehicles.Add(vehicle);
     }
 
     public void RemoveVehicle(Vehicle vehicle)
     {
-        if (!Vehicles.Contains(vehicle))
+        if (!vehicles.Contains(vehicle))
         {
             throw new InvalidOperationException("Vehicle is not binded to Customer");
         }
 
-        Vehicles.Remove(vehicle);
+        vehicles.Remove(vehicle);
+    }
+
+    public bool VehicleBelongsToCustomer(Guid vehicleId)
+    {
+        if (vehicles.Any(v => v.Id == vehicleId))
+        {
+            return true;
+        }
+        return false;
     }
 
     private void AddAddress(
