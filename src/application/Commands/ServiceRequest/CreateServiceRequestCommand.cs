@@ -5,6 +5,8 @@ using OneOf;
 using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
+using workshopManager.Application.Utils;
+using workshopManager.Domain.Enums;
 using ServiceRequestEntity = workshopManager.Domain.Entities.ServiceRequest;
 
 namespace workshopManager.Application.Commands.ServiceRequest;
@@ -59,6 +61,13 @@ public sealed class CreateServiceRequestCommandHandler
         {
             return new ValidationException($"Vehicle with id {vehicle.Id} does not belong to customer with id {customer.Id}.");
         }
+
+        if (request.ServiceDate.IsWeekendDay())
+        {
+            return new ValidationException("Service cannot be registered at weekend day.");
+        }
+
+        var serviceRequest = ServiceRequestEntity.Create(customer, vehicle, ServiceStatus.New);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

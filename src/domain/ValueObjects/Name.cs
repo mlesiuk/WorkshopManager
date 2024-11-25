@@ -25,4 +25,9 @@ public sealed class Name : ValueObject
         yield return FirstName;
         yield return LastName;
     }
+
+    public override string ToString()
+    {
+        return FullName;
+    }
 }

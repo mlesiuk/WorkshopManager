@@ -6,7 +6,8 @@ public sealed class ServiceRequest : BaseEntity
 {
     public Customer? Customer { get; set; }
     public Vehicle? Vehicle { get; set; }
-    public DateTime MyProperty { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime ExpectedEndDate { get; set; }
     public ServiceStatus Status { get; set; }
     public IEnumerable<Service> Services { get; set; } = [];
     public string Summary { get; set; } = string.Empty;
