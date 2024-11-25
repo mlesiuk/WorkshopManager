@@ -67,7 +67,7 @@ public sealed class CreateServiceRequestCommandHandler
             return new ValidationException("Service cannot be registered at weekend day.");
         }
 
-        var serviceRequest = ServiceRequestEntity.Create(customer, vehicle, ServiceStatus.New);
+        var serviceRequest = ServiceRequestEntity.Create(customer, vehicle, request.ServiceDate);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
