@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Models;
+using workshopManager.Domain.Abstractions.Interfaces;
 using workshopManager.Infrastructure.Persistence;
 using workshopManager.Infrastructure.Repositories;
 using workshopManager.Infrastructure.Services;
@@ -62,6 +62,9 @@ public static class DependencyInjection
     public static IServiceCollection AddRepositories(this  IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
         services.AddScoped<IVehicleAdditionalEquipmentRepository, VehicleAdditionalEquipmentRepository>();
         services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
         services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
@@ -71,6 +74,8 @@ public static class DependencyInjection
         services.AddScoped<IVehicleGenerationRepository, VehicleGenerationRepository>();
         services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
         services.AddScoped<IVehiclePropulsionRepository, VehiclePropulsionRepository>();
+        services.AddScoped<IVehicleRepository, VehicleRepository>();
+        services.AddScoped<IWorkerRepository, WorkerRepository>();
 
         return services;
     }

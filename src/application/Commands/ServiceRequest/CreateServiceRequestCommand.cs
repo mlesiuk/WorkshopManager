@@ -2,11 +2,10 @@
 using Mapster;
 using MediatR;
 using OneOf;
-using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
 using workshopManager.Application.Utils;
-using workshopManager.Domain.Enums;
+using workshopManager.Domain.Abstractions.Interfaces;
 using ServiceRequestEntity = workshopManager.Domain.Entities.ServiceRequest;
 
 namespace workshopManager.Application.Commands.ServiceRequest;
@@ -68,9 +67,10 @@ public sealed class CreateServiceRequestCommandHandler
         }
 
         var serviceRequest = ServiceRequestEntity.Create(customer, vehicle, request.ServiceDate);
+        await _serviceRequestRepository.AddAsync(serviceRequest, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new();
+        return serviceRequest.Adapt<ServiceRequestDto>();
     }
 }

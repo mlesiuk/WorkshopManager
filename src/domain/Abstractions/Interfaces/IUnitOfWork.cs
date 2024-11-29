@@ -1,4 +1,4 @@
-﻿namespace workshopManager.Application.Abstractions.Interfaces;
+﻿namespace workshopManager.Domain.Abstractions.Interfaces;
 
 public interface IUnitOfWork
 {

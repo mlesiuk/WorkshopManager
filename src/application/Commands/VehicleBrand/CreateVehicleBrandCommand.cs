@@ -2,9 +2,9 @@
 using Mapster;
 using MediatR;
 using OneOf;
-using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
+using workshopManager.Domain.Abstractions.Interfaces;
 using VehicleBrandEntity = workshopManager.Domain.Entities.VehicleBrand;
 
 namespace workshopManager.Application.Commands.VehicleBrand;

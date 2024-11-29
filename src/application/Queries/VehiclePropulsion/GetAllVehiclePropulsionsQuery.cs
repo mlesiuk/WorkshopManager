@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using MediatR;
-using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
+using workshopManager.Domain.Abstractions.Interfaces;
 
 namespace workshopManager.Application.Queries.VehiclePropulsion;
 

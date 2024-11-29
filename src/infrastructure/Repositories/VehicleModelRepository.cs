@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using workshopManager.Application.Abstractions.Interfaces;
+using workshopManager.Domain.Abstractions.Interfaces;
 using workshopManager.Domain.Entities;
 using workshopManager.Infrastructure.Persistence;
 

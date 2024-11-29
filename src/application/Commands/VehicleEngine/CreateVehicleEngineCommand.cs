@@ -2,9 +2,9 @@
 using Mapster;
 using MediatR;
 using OneOf;
-using workshopManager.Application.Abstractions.Interfaces;
 using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
+using workshopManager.Domain.Abstractions.Interfaces;
 using VehicleEngineEntity = workshopManager.Domain.Entities.VehicleEngine;
 
 namespace workshopManager.Application.Commands.VehicleEngine;

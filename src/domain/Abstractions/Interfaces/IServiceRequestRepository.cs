@@ -1,7 +1,7 @@
 ﻿using workshopManager.Domain.Entities;
 using workshopManager.Domain.Enums;
 
-namespace workshopManager.Application.Abstractions.Interfaces;
+namespace workshopManager.Domain.Abstractions.Interfaces;
 
 public interface IServiceRequestRepository
 {
