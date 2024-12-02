@@ -4,11 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using workshopManager.Domain;
 using workshopManager.Domain.Abstractions.Interfaces;
 using workshopManager.Infrastructure.Models;
 using workshopManager.Infrastructure.Persistence;
 using workshopManager.Infrastructure.Repositories;
 using workshopManager.Infrastructure.Services;
+using DomainAssembly = workshopManager.Domain.AssemblyReference;
+using InfrastructureAssembly = workshopManager.Infrastructure.AssemblyReference;
 using SecretClient = Azure.Security.KeyVault.Secrets.SecretClient;
 
 namespace workshopManager.Infrastructure;
@@ -66,19 +69,24 @@ public static class DependencyInjection
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
-        services.AddScoped<IVehicleAdditionalEquipmentRepository, VehicleAdditionalEquipmentRepository>();
-        services.AddScoped<IVehicleBodyTypeRepository, VehicleBodyTypeRepository>();
-        services.AddScoped<IVehicleBrandRepository, VehicleBrandRepository>();
-        services.AddScoped<IVehicleEngineRepository, VehicleEngineRepository>();
-        services.AddScoped<IVehicleFuelTypeRepository, VehicleFuelTypeRepository>();
-        services.AddScoped<IVehicleGearboxRepository, VehicleGearboxRepository>();
-        services.AddScoped<IVehicleGenerationRepository, VehicleGenerationRepository>();
-        services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
-        services.AddScoped<IVehiclePropulsionRepository, VehiclePropulsionRepository>();
-        services.AddScoped<IVehicleRepository, VehicleRepository>();
-        services.AddScoped<IWorkerRepository, WorkerRepository>();
+        var interfaces = typeof(DomainAssembly).Assembly.DefinedTypes
+            .Where(type => type is { IsAbstract: true, IsInterface: true } &&
+                type.Name.EndsWith("Repository"))
+            .ToList();
+
+        var implementations = typeof(InfrastructureAssembly).Assembly.DefinedTypes
+            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                type.Name.EndsWith("Repository"))
+            .ToList();
+
+        foreach(var @interface in interfaces)
+        {
+            var implementation = implementations.FirstOrDefault(i => i.IsAssignableTo(@interface));
+            if (implementation is not null)
+            {
+                services.AddScoped(@interface, implementation);
+            }
+        }
 
         return services;
     }
