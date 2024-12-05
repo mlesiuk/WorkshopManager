@@ -6,6 +6,7 @@ using workshopManager.Application.Dtos;
 using workshopManager.Application.Exceptions;
 using workshopManager.Application.Utils;
 using workshopManager.Domain.Abstractions.Interfaces;
+using workshopManager.Domain.Events;
 using ServiceRequestEntity = workshopManager.Domain.Entities.ServiceRequest;
 
 namespace workshopManager.Application.Commands.ServiceRequest;
@@ -16,6 +17,7 @@ public sealed class CreateServiceRequestCommandHandler
     : IRequestHandler<CreateServiceRequestCommand, OneOf<ServiceRequestDto, ValidationException, NotFoundException>>
 {
     private readonly IValidator<CreateServiceRequestCommand> _validator;
+    private readonly IMessagePublisher _messagePublisher;
     private readonly ICustomerRepository _customerRepository;
     private readonly IVehicleRepository _vehicleRepository;
     private readonly IServiceRequestRepository _serviceRequestRepository;
@@ -26,13 +28,15 @@ public sealed class CreateServiceRequestCommandHandler
         IVehicleRepository vehicleRepository,
         IServiceRequestRepository serviceRequestRepository,
         IValidator<CreateServiceRequestCommand> validator,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IMessagePublisher messagePublisher)
     {
         _customerRepository = customerRepository;
         _vehicleRepository = vehicleRepository;
         _serviceRequestRepository = serviceRequestRepository;
         _validator = validator;
         _unitOfWork = unitOfWork;
+        _messagePublisher = messagePublisher;
     }
 
     public async Task<OneOf<ServiceRequestDto, ValidationException, NotFoundException>> Handle(CreateServiceRequestCommand request, CancellationToken cancellationToken = default)
@@ -70,6 +74,13 @@ public sealed class CreateServiceRequestCommandHandler
         await _serviceRequestRepository.AddAsync(serviceRequest, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await _messagePublisher.PublishAsync(new ServiceRegisteredEvent
+        {
+            Id = Guid.NewGuid(),
+            CustomerId = customer.Id,
+            VehicleId = vehicle.Id
+        });
 
         return serviceRequest.Adapt<ServiceRequestDto>();
     }

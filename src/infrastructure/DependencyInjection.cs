@@ -97,7 +97,6 @@ public static class DependencyInjection
         services.AddMassTransit(configuration =>
         {
             configuration.SetKebabCaseEndpointNameFormatter();
-
             configuration.UsingRabbitMq((context, cfg) =>
             {
                 cfg.ConfigureEndpoints(context);

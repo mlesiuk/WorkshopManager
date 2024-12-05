@@ -39,6 +39,8 @@ src/infrastructure/bin/
 src/infrastructure/obj/
 src/presentation/bin/
 src/presentation/obj/
+tests/Architecture.Tests/bin/
+tests/Architecture.Tests/obj/
 terraform/.terraform
 tfplan
 /obj/*
